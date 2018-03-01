@@ -43,14 +43,14 @@ class HueApiClient:
         print(response.text)
         response_dict = response.json()[0]
         if "error" in response_dict:
-            return False
+            return "Error", False
         else:
             if not os.path.isdir(self.home + "/.reactor"):
                 os.mkdir(self.home + "/.reactor")
             with open(self.home + "/.reactor/hue-username.txt", "w+") as username_file:
                 username_file.write(response_dict["success"]["username"])
                 self.username = response_dict["success"]["username"]
-            return True
+            return response_dict["success"]["username"], True
 
     def get_lights(self):
         response = requests.get(self._generate_full_base_api() + "/lights")
