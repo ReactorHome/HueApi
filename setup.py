@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='hue-api',
     version='1.0.0',
-    packages=['reactor', 'reactor.hue', 'reactor.hue.sensors'],
+    packages=['reactor_hue', 'reactor_hue.hue', 'reactor_hue.hue.sensors'],
     package_dir={'': 'src'},
     url='',
     license='',

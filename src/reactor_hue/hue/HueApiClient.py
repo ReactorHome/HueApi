@@ -4,10 +4,10 @@ from pathlib import Path
 import requests
 import os
 
-from reactor.hue.HueLight import HueLight
-from reactor.hue.sensors.LightSensor import LightSensor
-from reactor.hue.sensors.MotionSensor import MotionSensor
-from reactor.hue.sensors.TemperatureSensor import TemperatureSensor
+from reactor_hue.hue.HueLight import HueLight
+from reactor_hue.hue.sensors.LightSensor import LightSensor
+from reactor_hue.hue.sensors.MotionSensor import MotionSensor
+from reactor_hue.hue.sensors.TemperatureSensor import TemperatureSensor
 
 SENSOR_DICT = {
     "ZLLPresence": MotionSensor,
@@ -23,8 +23,8 @@ class HueApiClient:
         self.home = str(Path.home())
         self.username = username
         if username is None:
-            if os.path.isfile(self.home + "/.reactor/hue-username.txt"):
-                with open(self.home + "/.reactor/hue-username.txt", "r") as username_file:
+            if os.path.isfile(self.home + "/.reactor_hue/hue-username.txt"):
+                with open(self.home + "/.reactor_hue/hue-username.txt", "r") as username_file:
                     self.username = username_file.read()
             else:
                 print("file doesn't exist")
@@ -45,9 +45,9 @@ class HueApiClient:
         if "error" in response_dict:
             return "Error", False
         else:
-            if not os.path.isdir(self.home + "/.reactor"):
-                os.mkdir(self.home + "/.reactor")
-            with open(self.home + "/.reactor/hue-username.txt", "w+") as username_file:
+            if not os.path.isdir(self.home + "/.reactor_hue"):
+                os.mkdir(self.home + "/.reactor_hue")
+            with open(self.home + "/.reactor_hue/hue-username.txt", "w+") as username_file:
                 username_file.write(response_dict["success"]["username"])
                 self.username = response_dict["success"]["username"]
             return response_dict["success"]["username"], True
