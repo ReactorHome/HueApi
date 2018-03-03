@@ -1,13 +1,7 @@
 
 
-class HueLight():
+class HueLight:
     def __init__(self, id, values):
-        # self.state = values["state"]
-        # self.type = values["type"]
-        # self.name = values["name"]
-        # self.modelid = values["modelid"]
-        # self.swversion = values["swversion"]
-        # self.id = id
         self.type = 0
         self.hardware_id = values["uniqueid"]
         self.connected = values["state"]["reachable"]
@@ -22,3 +16,11 @@ class HueLight():
         self.saturation = values["state"]["sat"] if "sat" in values["state"] else None
         self.xy = values["state"]["xy"] if "xy" in values["state"] else None
         self.color_temperature = values["state"]["ct"] if "ct" in values["state"] else None
+
+    def __hash__(self):
+        return hash(self.hardware_id) ^ hash(self.connected) ^ hash(self.on) ^ \
+               hash((self.hardware_id, self.connected, self.hardware_id))
+
+    def __eq__(self, other):
+        return (self.hardware_id, self.connected, self.on) == \
+               (other.hardware_id, other.connected, other.on)
