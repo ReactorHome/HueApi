@@ -1,8 +1,9 @@
 
 
 class HueLight:
-    def __init__(self, id, values):
+    def __init__(self, internal_id, values):
         self.type = 0
+        self.internal_id = internal_id
         self.hardware_id = values["uniqueid"]
         self.connected = values["state"]["reachable"]
         self.name = values["name"]
